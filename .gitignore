@@ -56,3 +56,5 @@ apr.logv*
 /Physical Design/scripts/helpers/tnscalculator.tcl
 
 /RTL/src/CF_SRAM_1024x32.tt_180V_25C.v
+
+*.drawio
