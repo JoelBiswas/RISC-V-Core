@@ -1,0 +1,58 @@
+# Logs and simulator command histories
+*.log
+*.log.*
+*.history
+
+# macOS metadata
+.DS_Store
+._*
+
+# Generated simulation workspaces and databases
+**/WORKSPACE/
+**/xcelium.d/
+**/cov_work/
+*.shm/
+*.vcd
+*.fst
+
+# Python caches
+__pycache__/
+*.py[cod]
+
+
+/Physical Design/resources/cadence_sky130/
+/Physical Design/resources/synopsys_libs/
+
+# Physical implementation runs and generated source lists
+/Physical Design/outputs/
+/Physical Design/scripts/synthesis/lists/
+
+# Third-party collateral pending license review
+/Physical Design/inputs/CF_SRAM_1024x32/
+/Physical Design/signoff/CF_SRAM_1024x32.cdl
+
+# Imported layout libraries
+/Physical Design/signoff/RISCV_CPU/
+/Physical Design/signoff/jbiswas33/
+
+# Cadence session files and rotated logs
+**/.cadence/
+*.cdslck*
+innovus.log*
+innovus.cmd*
+apr.logv*
+
+# Unrelated example designs
+/Physical Design/resources/counter.v
+/Physical Design/resources/openframe_project_wrapper.gate.v
+
+# External or duplicate PDF documentation
+/Physical Design/docs/Cadence ASK Access for Academia.pdf
+/Physical Design/docs/Virtuoso-Signoff-Checks.pdf
+
+# Helpers unused by the current flow
+/Physical Design/scripts/synthesis/steps/step_clock_gate.tcl
+/Physical Design/scripts/synthesis/steps/step_dump.tcl
+/Physical Design/scripts/helpers/tnscalculator.tcl
+
+/RTL/src/CF_SRAM_1024x32.tt_180V_25C.v

@@ -1,0 +1,24 @@
+// Provided chip RTL
+../../../RTL/src/CF_SRAM_1024x32.tt_180V_25C.v
+../../../RTL/src/sram_wrapper.sv
+../../../RTL/src/memory_controller.sv
+../../../RTL/src/chip_top.sv
+
+../../../RTL/src/cpu/cpu_pkg.sv
+../../../RTL/src/cpu/reg_file.sv
+../../../RTL/src/cpu/fetch.sv
+../../../RTL/src/cpu/cpu_top.sv
+../../../RTL/src/cpu/decoder.sv
+../../../RTL/src/cpu/alu.sv
+
+// Member testbench
+../../tb/cpu_if.sv
+../../tb/cpu_seq_item.svh
+../../tb/cpu_xbar_item.svh
+../../tb/cpu_ref_model.svh
+../../tb/cpu_sequencer.svh
+../../tb/cpu_driver.svh
+../../tb/cpu_monitor.svh
+../../tb/cpu_sb.svh
+../../tb/cpu_tb_pkg.sv
+../../tb/cpu_tb_top.sv

@@ -1,0 +1,9 @@
+DEFINE      analogLib               /tools/software/cadence/ic/25.10.060/tools.lnx86/dfII/etc/cdslib/artist/analogLib
+DEFINE      basic                   /tools/software/cadence/ic/25.10.060/tools.lnx86/dfII/etc/cdslib/basic
+DEFINE      sky130_fd_pr_main       ../resources/cadence_sky130/sky130_release_0.1.0/libs/sky130_fd_pr_main
+DEFINE      sky130_scl_9T_LP        ../resources/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T_LP/oa/sky130_scl_9T_LP
+DEFINE      sky130_scl_9T           ../resources/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T/oa/sky130_scl_9T
+DEFINE      sky130_scl_9T_HP        ../resources/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T_HS/oa/sky130_scl_9T_HS
+DEFINE      sky130_scl_9T_phyCells  ../resources/cadence_sky130/sky130_scl_9T_0.1.2/sky130_scl_9T_tech/oa/sky130_scl_9T_phyCells
+DEFINE jbiswas33 ./jbiswas33
+DEFINE RISCV_CPU ./RISCV_CPU

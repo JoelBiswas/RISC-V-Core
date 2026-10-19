@@ -1,0 +1,65 @@
+#!/bin/tcsh
+if ($?ENV_SETUP) then
+	echo "Already set up!"
+	exit
+endif
+
+setenv ENV_SETUP 1
+echo "Adding tools:"
+# =================================================== #
+# =================== SJapr Setup =================== #
+# =================================================== #
+
+# Add our flow to the $PATH
+set _scripts = `realpath ./scripts`
+setenv PATH "${PATH}:${_scripts}"; echo "SJapr"
+setenv wd `pwd`
+# =================================================== #
+# ================== Cadence Tools ================== #
+# =================================================== #
+
+# CDS == Cadence Design Systems
+setenv CDS_LOG_PATH ~/.cadencelogs
+## required as per matt bowlby's wiki on SKY130-Flow
+setenv PEGASUS_DRC ${wd}/resources/cadence_sky130/sky130_release_0.1.0/Sky130_DRC
+
+# configure a bunch of envars cadence tools look for
+# (a lot of this is actually redundant with other
+# tool-specific setup files...)
+source /tools/software/cadence/setup.csh >& /dev/null; echo "Cadence Envars"
+
+# Virtuoso Studio
+source /tools/software/cadence/ic/cshrc.latest >& /dev/null; echo "Virtuoso Studio"
+
+# DDI: Digital Design Implementation
+## Innovus, Genus, JStudio
+source /tools/software/cadence/ddi/cshrc.latest >& /dev/null; echo "Innovus"; echo "Genus"; echo "JStudio"
+
+# SSV: Silicon Signoff and Verification
+## Tempus, Voltus, Certus, Litmus
+source /tools/software/cadence/ssv/cshrc.latest >& /dev/null; echo "Tempus"; echo "Voltus"; echo "Certus"; echo "Litmus"
+
+# Miscellaneous
+source /tools/software/cadence/quantus/cshrc.latest >& /dev/null; echo "Quantus"
+source /tools/software/cadence/xcelium/cshrc.latest >& /dev/null; echo "Xcelium"
+source /tools/software/cadence/confrml/cshrc.latest >& /dev/null; echo "Conformal"
+source /tools/software/synopsys/vcs/latest/bin/environ.csh >& /dev/null; echo "VCS"
+#source /tools/software/cadence/pegasus/cshrc.latest > /dev/null 2>&1
+
+# ========= Required on GT RHEL Systems============== #
+unsetenv OA_HOME
+setenv OA_UNSUPPORTED_PLAT linux_rhel70_gcc93x
+# =================================================== #
+
+
+# =================================================== #
+# ================= Synopsys Tools ================== #
+# =================================================== #
+
+# Much Simpler. Thank you Synopsys :)
+source /tools/software/synopsys/setup.csh >& /dev/null; echo "Synopsys Suite"
+
+# =================================================== #
+set prompt = "%{\033[;31m%}(SJapr)%{\033[0m%} $prompt"
+alias sjapr 'SJapr \!*'
+echo "Done!"
