@@ -12,7 +12,7 @@ XRUN_FLAGS = -64bit -sv -linedebug -access +rwc \
              -timescale 1ns/10ps +define+SIM=1 +incdir+sym_links \
              -coverage all -licqueue -covoverwrite
 
-SIM_PLUSARGS ?=
+SIM_PLUSARGS ?= +NO_STOP_ON_ERROR
 SEED ?= 1
 LOGFILE ?= simulation.log
 WAVE_PLUSARGS ?=

@@ -47,6 +47,17 @@ module cpu_tb_top;
     cpu_tb_pkg::cpu_monitor #(.DataSize(DataSize), .AddrSize(AddrSize))   mon;
     cpu_tb_pkg::cpu_sb #(.DataSize(DataSize), .AddrSize(AddrSize))        sb;
 
+    // Reference model registers exposed to SimVision
+    logic [31:0] ref_regs_wave [REG_COUNT];
+
+    always @(negedge clk) begin
+        if (sb != null && sb.ref_model != null) begin
+            for (int i = 0; i < REG_COUNT; i++) begin
+                ref_regs_wave[i] = sb.ref_model.regs[i];
+            end
+        end
+    end
+
     // Record failed assertion
     function void assertion_fail(input string message);
         assertion_errors++;
@@ -455,7 +466,7 @@ module cpu_tb_top;
     initial begin
         void'($value$plusargs("SEED_LABEL=%s", requested_seed));
         $shm_open("waves.shm");
-        $shm_probe("AC");
+        $shm_probe("ASM");
     end
 
     wire rst = cpu_if.reset;

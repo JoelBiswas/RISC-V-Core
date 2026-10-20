@@ -61,7 +61,31 @@ module cpu_top (
 	logic [31:0] alu_in2;
 	logic [31:0] alu_result;
 
-	assign stall_core = halted_o | ~en_i | (operation == LOAD && ~dsram_rready_i);//when else would you stall?
+	logic load_pending;
+	logic load_request;
+	logic load_complete;
+
+	assign load_request =
+		en_i && instr_vld &&
+		(operation == LOAD) &&
+		!load_pending;
+
+	assign load_complete =
+		en_i && instr_vld &&
+		(operation == LOAD) &&
+		load_pending &&
+		dsram_rready_i;
+
+	always_ff @(posedge clk_i) begin
+		if (rst_i || !en_i)
+			load_pending <= 1'b0;
+		else if (load_complete)
+			load_pending <= 1'b0;
+		else if (load_request)
+			load_pending <= 1'b1;
+	end
+
+	assign stall_core = halted_o || !en_i || ((operation == LOAD) && !load_complete);
 	
 	// === Instruction Fetch === //
 	// certain ports are tied off bc they depend on modulees you need to implement.
@@ -88,27 +112,24 @@ module cpu_top (
     assign branch_taken = rs1_data == rs2_data; //
 	
 
-	
-
-
 	// Unused outputs tied off until downstream modules are added
 	assign halted_o = operation == EBREAK; //what instr should halt the cpu? does this make sense to be combinational or sequential?
 
-	assign dsram_en_o =
-		(operation == LOAD && !dsram_rready_i) ||
-		(operation == STORE);
-	assign dsram_write_en_o = operation == STORE;
+	assign dsram_en_o = load_request || (en_i && instr_vld && (operation == STORE));
+
+	assign dsram_write_en_o = en_i && instr_vld && (operation == STORE);
     assign dsram_addr_o = alu_result[11:2]; //Remove last 2 bits to divide by 4
     assign dsram_wdata_o = rs2_data;
 
-	assign rd_write_en =
-    	(operation == LOAD)
-			? dsram_rready_i
-			: instr_vld && //Maybe remove later?
-			operation != NOP &&
-			operation != STORE &&
-			operation != BEQ &&
-			operation != EBREAK;
+assign rd_write_en = en_i && instr_vld &&
+    (
+        (operation == LOAD)
+            ? load_complete
+            : operation != NOP &&
+              operation != STORE &&
+              operation != BEQ &&
+              operation != EBREAK
+    );
 	
 	reg_file register_file (
 		.clk_i(clk_i),
