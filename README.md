@@ -69,8 +69,6 @@ The following results describe the current physical implementation. Functional v
 ### Verification Results
 Directed and constrained-random tests check instruction execution, register state, memory accesses, and interface behavior against a reference model.
 
-The seed-1 regression currently reports a register mismatch in `random_cpu_14`: register `x26` reads `0x00000000` instead of `0xc8d88f13`. This issue remains under investigation.
-
 ### DRC/LVS Results
 Both DRC and LVS both currently have numerous errors. I am currently in the process of fixing these errors
 ![DRC Violoations Image](Docs/Images/DRC.png)
@@ -268,12 +266,11 @@ This removes the generated verification workspace, including logs, waveforms, an
 - **Limited memory:** Instruction and data memories each contain 1024 32-bit words (4 KiB). Memory addresses are reduced to 10-bit word indices; out-of-range accesses are not trapped.
 - **Simplified halt behavior:** `ebreak` halts the core rather than entering an architectural exception handler.
 - **No instruction pipeline:** The current implementation does not use a staged instruction pipeline.
-- **Incomplete verification closure:** The seed-1 regression reports an `x26` register mismatch in `random_cpu_14`. The load/store handshake is under investigation.
 - **Environment dependencies:** Simulation and physical design require licensed tools and separately obtained SRAM and technology files. Physical design scripts also require path-portability cleanup.
 
 ### Future Work
 
-- Resolve the outstanding verification failure and add a focused regression test.
+- Add directed regression tests for consecutive loads and stores.
 - Introduce instruction pipelining with appropriate data-hazard and branch handling.
 - Expand directed and constrained-random testing and document coverage across multiple seeds.
 - Extend instruction support toward a more complete RV32I implementation.
